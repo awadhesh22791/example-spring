@@ -5,6 +5,7 @@ import org.jobrunr.examples.services.MyServiceInterface;
 import org.jobrunr.jobs.JobId;
 import org.jobrunr.jobs.context.JobContext;
 import org.jobrunr.scheduling.JobScheduler;
+import org.jobrunr.scheduling.cron.Cron;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,5 +71,10 @@ public class JobController {
     public String longRunningJobWithJobContext(@RequestParam(value = "name", defaultValue = "World") String name) {
         final JobId enqueuedJobId = jobScheduler.<MyService>enqueue(myService -> myService.doLongRunningJobWithJobContext("Hello " + name, JobContext.Null));
         return "Job Enqueued: " + enqueuedJobId;
+    }
+    
+    @GetMapping("/every-minute-job")
+    public String everyMinuteJob() {
+    	return jobScheduler.<MyService>scheduleRecurrently(Cron.minutely(), myService->myService.doMinutelyJob());
     }
 }

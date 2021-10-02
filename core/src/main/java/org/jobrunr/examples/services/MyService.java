@@ -53,4 +53,8 @@ public class MyService implements MyServiceInterface {
             Thread.currentThread().interrupt();
         }
     }
+    
+    public void doMinutelyJob() {
+    	System.out.println("This is minute job.");
+    }
 }
