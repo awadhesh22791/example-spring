@@ -37,6 +37,7 @@ public class JobController {
                 "- <a href=\"/jobs/schedule-simple-job\">Schedule a simple job 3 hours from now using a service instance</a><br />" +
                 "- <a href=\"/jobs/long-running-job\">Enqueue a long-running job</a><br />" +
                 "- <a href=\"/jobs/long-running-job-with-job-context\">Enqueue a long-running job using a JobContext to log progress</a><br />" +
+                "- <a href=\"/jobs/every-minute-job\">Add job to run every minutes</a><br />" +
                 "- Learn more on <a href=\"https://www.jobrunr.io/\">www.jobrunr.io</a><br />"
                 ;
     }
@@ -75,6 +76,6 @@ public class JobController {
     
     @GetMapping("/every-minute-job")
     public String everyMinuteJob() {
-    	return jobScheduler.<MyService>scheduleRecurrently(Cron.minutely(), myService->myService.doMinutelyJob());
+    	return jobScheduler.<MyService>scheduleRecurrently("Minute-Job",Cron.minutely(), myService->myService.doMinutelyJob());
     }
 }
